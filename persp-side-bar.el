@@ -131,7 +131,7 @@
     (if all-persps
         (dolist (persp all-persps)
           (if (string= persp current-persp)
-              ;; カレントperspectiveをハイライト
+              ;; Highlight current perspective
               (insert (propertize (format "► %s\n" persp)
                                   'face 'highlight))
             (insert-button persp
@@ -182,26 +182,26 @@
 
 (defun persp-side-bar-on-new-perspective ()
   "Handle new perspective creation - show sidebar if enabled."
-  ;; 元のウィンドウを記憶
+  ;; Remember the original window
   (let ((original-window (selected-window)))
-    ;; perspective切り替えが完了するまで少し待機
+    ;; Wait briefly until perspective switch completes
     (run-with-idle-timer 0.01 nil
                          (lambda ()
                            (if persp-side-bar-auto-show-on-new
                                (progn
-                                 ;; サイドバー表示（内部でレンダリングも実行される）
+                                 ;; Show sidebar (rendering is also performed internally)
                                  (persp-side-bar-show)
-                                 ;; 元のウィンドウにフォーカスを戻す
+                                 ;; Return focus to the original window
                                  (when (window-live-p original-window)
                                    (select-window original-window)))
-                             ;; 自動表示が無効の場合はリフレッシュのみ
+                             ;; Only refresh if auto-show is disabled
                              (persp-side-bar-refresh))))))
 
 ;; Auto-refresh when perspective changes
 (advice-add 'persp-switch :after
             (lambda (&rest _) (persp-side-bar-refresh)))
 
-;; Phase 1: 基本的なperspective操作監視
+;; Phase 1: Basic perspective operation monitoring
 (advice-add 'persp-new :after
             (lambda (&rest _) (persp-side-bar-on-new-perspective)))
 
@@ -211,7 +211,7 @@
 (advice-add 'persp-rename :after
             (lambda (&rest _) (persp-side-bar-refresh)))
 
-;; Phase 2: 追加のperspective操作監視
+;; Phase 2: Additional perspective operation monitoring
 (advice-add 'persp-next :after
             (lambda (&rest _) (persp-side-bar-refresh)))
 
