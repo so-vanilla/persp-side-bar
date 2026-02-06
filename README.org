@@ -1,0 +1,81 @@
+#+TITLE: persp-side-bar
+#+AUTHOR: Omura Shuto
+
+[[https://www.gnu.org/licenses/gpl-3.0][https://img.shields.io/badge/License-GPL%20v3-blue.svg]]
+
+A sidebar for [[https://github.com/nex3/perspective-el][perspective.el]] that displays all perspectives with navigation support.
+
+* Features
+
+- Display all perspectives in a side window
+- Highlight the current perspective
+- Quick navigation between perspectives
+- Auto-refresh when perspectives change
+- Optional auto-show when creating new perspective
+
+* Installation
+
+** straight.el
+
+#+begin_src emacs-lisp
+(straight-use-package
+ '(persp-side-bar :type git :host github :repo "so-vanilla/persp-side-bar"))
+#+end_src
+
+** use-package with straight.el
+
+#+begin_src emacs-lisp
+(use-package persp-side-bar
+  :straight (:type git :host github :repo "so-vanilla/persp-side-bar")
+  :after perspective
+  :bind ("C-c p s" . persp-side-bar-toggle))
+#+end_src
+
+** Manual Installation
+
+Clone this repository and add it to your =load-path=:
+
+#+begin_src emacs-lisp
+(add-to-list 'load-path "/path/to/persp-side-bar")
+(require 'persp-side-bar)
+#+end_src
+
+* Usage
+
+| Command                  | Description                |
+|--------------------------+----------------------------|
+| =persp-side-bar-show=    | Show the sidebar           |
+| =persp-side-bar-toggle=  | Toggle the sidebar         |
+| =persp-side-bar-close=   | Close the sidebar          |
+| =persp-side-bar-focus=   | Focus on the sidebar       |
+| =persp-side-bar-refresh= | Refresh the sidebar        |
+| =persp-side-bar-resize=  | Reset the sidebar width    |
+
+* Keybindings
+
+The following keybindings are available in the sidebar buffer:
+
+| Key     | Command                         |
+|---------+---------------------------------|
+| =n=, =j=  | Next perspective (=persp-next=) |
+| =p=, =k=  | Previous perspective (=persp-prev=) |
+| =RET=   | Switch to perspective at point  |
+| =SPC=   | Switch to perspective at point  |
+| =g=     | Refresh sidebar                 |
+| =r=     | Reset sidebar width             |
+| =q=     | Close sidebar                   |
+
+* Customization
+
+** =persp-side-bar-auto-show-on-new=
+
+When non-nil (default: =t=), automatically show the sidebar when creating a new perspective.
+
+#+begin_src emacs-lisp
+(setq persp-side-bar-auto-show-on-new nil)  ; Disable auto-show
+#+end_src
+
+* License
+
+This program is licensed under the GNU General Public License v3.0.
+See [[file:LICENSE][LICENSE]] for details.
